@@ -1,23 +1,40 @@
 import logo from './logo.svg';
 import './App.css';
+import {useGetAllPostQuery} from './services/post'
 
 function App() {
+  const responce = useGetAllPostQuery()
+  console.log("res",responce.data);
+  if(responce.isLoading) return <div>Loading......</div>
+  if(responce.error) return <h1>an error with api</h1>
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+   <h1>
+   <table>
+                <tr>
+                    <th>Company</th>
+                    <th>title</th>
+                   
+                </tr>
+                {
+                    responce.data?.map((ele, index) => {
+                        return (
+                            <>
+                            <tbody>
+
+                                <tr>
+                                    <td>{ele.id}</td>
+                                    <td>{ele.title}</td>
+                                    {/* <td>Germany</td> */}
+                                </tr>
+                            </tbody>
+
+                            </>
+                        )
+                    })
+                }
+            </table>
+   </h1>
     </div>
   );
 }
